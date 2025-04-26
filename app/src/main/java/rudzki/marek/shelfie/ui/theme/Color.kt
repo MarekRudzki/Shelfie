@@ -2,7 +2,7 @@ package rudzki.marek.shelfie.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val primaryLight = Color(0xFF415F91)
+val primaryLight = Color(0xFF1A8CB5)
 val onPrimaryLight = Color(0xFFFFFFFF)
 val primaryContainerLight = Color(0xFFD6E3FF)
 val onPrimaryContainerLight = Color(0xFF284777)
@@ -18,7 +18,7 @@ val errorLight = Color(0xFFBA1A1A)
 val onErrorLight = Color(0xFFFFFFFF)
 val errorContainerLight = Color(0xFFFFDAD6)
 val onErrorContainerLight = Color(0xFF93000A)
-val backgroundLight = Color(0xFFF9F9FF)
+val backgroundLight = Color(0xFFD0D0E8)
 val onBackgroundLight = Color(0xFF191C20)
 val surfaceLight = Color(0xFFFAF8FF)
 val onSurfaceLight = Color(0xFF1A1B21)
