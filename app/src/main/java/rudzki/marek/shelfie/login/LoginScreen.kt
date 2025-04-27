@@ -24,7 +24,7 @@ fun LoginScreen(innerPaddingValues: PaddingValues) {
             .padding(bottom = innerPaddingValues.calculateBottomPadding())
             .background(color = MaterialTheme.colorScheme.background)
     ) {
-        ImageWithSlogan()
+//        ImageWithSlogan() //TODO
         if (loginBoxDisplayed == 0) LoginBox(//TODO animated visibility
             onLoginBoxChanged = { loginBoxDisplayed = it}
         )

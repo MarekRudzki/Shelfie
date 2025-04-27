@@ -29,6 +29,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import rudzki.marek.shelfie.shared.TopBarWithBackButton
 
 @Composable
 fun VerifyBox(
@@ -44,39 +45,17 @@ fun VerifyBox(
         Column(
             modifier = Modifier.fillMaxSize()
         ) {
-            Row (
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 25.dp, bottom = 5.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                IconButton(
-                    onClick = {
-                        onLoginBoxChanged(0)
-                    }
-                ) {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Default.ArrowBack,
-                        tint = MaterialTheme.colorScheme.primary,
-                        contentDescription = "Back button"
-                    )
+            TopBarWithBackButton(
+                title = "Verify",
+                onBackClick = {
+                    onLoginBoxChanged(0)
                 }
-                Text(
-                    modifier = Modifier
-                        .align(Alignment.CenterVertically),
-                    text = "Verify",
-                    style = TextStyle(
-                        fontSize = 22.sp,
-                        fontWeight = FontWeight.W700,
-                        letterSpacing = 2.sp
-                    )
-                )
-            }
+            )
             Text(
                 modifier = Modifier
                     .padding(horizontal = 16.dp)
                     .align(Alignment.CenterHorizontally),
-                text = "Please type your phone number to login or register."
+                text = "Please /..."
             )
             Spacer(modifier = Modifier.height(12.dp))
         }

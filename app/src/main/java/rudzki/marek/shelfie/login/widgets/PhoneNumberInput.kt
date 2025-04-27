@@ -2,6 +2,7 @@ package rudzki.marek.shelfie.login.widgets
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -38,90 +39,96 @@ fun formatPhoneNumber(input: String): String {
 fun PhoneNumberInput(
     isPhoneNumberValid: Boolean,
     onPhoneNumberValidation: (Boolean) -> Unit,
+    onPhoneNumberChange: (String) -> Unit,
 ) {
     var phoneNumber by remember { mutableStateOf("") }
     var phoneNumberField by remember { mutableStateOf(TextFieldValue("")) }
+    var isChanged by remember { mutableStateOf(false) }
 
-    OutlinedTextField(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp),
-        value = phoneNumberField,
-        colors = TextFieldDefaults.colors(
-            unfocusedPlaceholderColor =  MaterialTheme.colorScheme.primary,
-            focusedPlaceholderColor = MaterialTheme.colorScheme.primary,
-            focusedContainerColor = Color(255,255,255),
-            unfocusedContainerColor = Color(255,255,255),
-            errorContainerColor = Color(255,255,255),
-            focusedTextColor = MaterialTheme.colorScheme.primary,
-            errorTextColor = MaterialTheme.colorScheme.primary,
-        ),
+    Column {
+        OutlinedTextField(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp),
+            value = phoneNumberField,
+            colors = TextFieldDefaults.colors(
+                unfocusedPlaceholderColor = MaterialTheme.colorScheme.primary,
+                focusedPlaceholderColor = MaterialTheme.colorScheme.primary,
+                focusedContainerColor = Color(255, 255, 255),
+                unfocusedContainerColor = Color(255, 255, 255),
+                errorContainerColor = Color(255, 255, 255),
+                focusedTextColor = MaterialTheme.colorScheme.primary,
+                errorTextColor = MaterialTheme.colorScheme.primary,
+            ),
+            leadingIcon = {
+                Row(
+                    modifier = Modifier.padding(horizontal = 10.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.pl_flag),
+                        contentDescription = "Poland Flag",
+                        modifier = Modifier
+                            .height(22.dp)
+                            .width(35.dp)
+                            .border(width = 1.dp, color = Color.Black)
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(
+                        text = "(+48)",
+                        style = MaterialTheme.typography.bodyMedium.copy(
+                            color = Color.Gray,
+                            fontSize = 16.sp
+                        )
+                    )
+                }
+            },
+            onValueChange = { newValue ->
+                isChanged = true
 
-        leadingIcon = {
-            Row(
-                modifier = Modifier.padding(horizontal = 10.dp),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.pl_flag),
-                    contentDescription = "Poland Flag",
-                    modifier = Modifier
-                        .height(22.dp)
-                        .width(35.dp)
-                        .border(width = 1.dp, color = Color.Black)
-                )
-                Spacer(modifier = Modifier.width(8.dp))
+                val digitsOnly = newValue.text.filter { it.isDigit() }
+
+                if (digitsOnly.length <= 9) {
+                    phoneNumber = digitsOnly
+
+                    val formatted = formatPhoneNumber(digitsOnly)
+
+                    phoneNumberField = TextFieldValue(
+                        text = formatted,
+                        selection = TextRange(formatted.length)
+                    )
+                }
+
+                if (phoneNumber.length == 9) {
+                    onPhoneNumberValidation(true)
+                } else {
+                    onPhoneNumberValidation(false)
+                }
+                onPhoneNumberChange(phoneNumber)
+            },
+            label = {
                 Text(
-                    text = "(+48)",
+                    text = "Your phone number",
                     style = MaterialTheme.typography.bodyMedium.copy(
-                        color = Color.Gray,
-                        fontSize = 16.sp
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.primary
                     )
                 )
-            }
-        },
-        onValueChange = { newValue ->
-            val digitsOnly = newValue.text.filter { it.isDigit() }
-
-            if (digitsOnly.length <= 9) {
-                phoneNumber = digitsOnly
-
-                val formatted = formatPhoneNumber(digitsOnly)
-
-                phoneNumberField = TextFieldValue(
-                    text = formatted,
-                    selection = TextRange(formatted.length) // Kursor na końcu
-                )
-            }
-
-            if (phoneNumber.length == 9) {
-                onPhoneNumberValidation(true)
-            } else {
-                onPhoneNumberValidation(false)
-            }
-        },
-        label = {
-            Text(
-                text = "Your phone number",
-                style = MaterialTheme.typography.bodyMedium.copy(
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.primary
-                )
+            },
+            isError = isChanged && !isPhoneNumberValid,
+            singleLine = true,
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Phone
             )
-        },
-        isError = !isPhoneNumberValid,
-        singleLine = true,
-        keyboardOptions = KeyboardOptions(
-            keyboardType = KeyboardType.Phone
         )
-    )
 
-    if (!isPhoneNumberValid) {
-        Text(
-            text = "Phone number must be exactly 9 digits",
-            color = MaterialTheme.colorScheme.error,
-            style = MaterialTheme.typography.bodySmall,
-            modifier = Modifier.padding(start = 16.dp, top = 4.dp)
-        )
+        if (isChanged && !isPhoneNumberValid) {
+            Text(
+                text = "Phone number must be exactly 9 digits",
+                color = MaterialTheme.colorScheme.error,
+                style = MaterialTheme.typography.bodySmall,
+                modifier = Modifier.padding(start = 16.dp, top = 4.dp)
+            )
+        }
     }
 }
