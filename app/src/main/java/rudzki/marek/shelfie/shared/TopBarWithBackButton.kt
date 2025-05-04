@@ -38,7 +38,7 @@ fun TopBarWithBackButton(
             ) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = "Back",
+                    contentDescription = "Back Button",
                     tint = MaterialTheme.colorScheme.primary
                 )
             }

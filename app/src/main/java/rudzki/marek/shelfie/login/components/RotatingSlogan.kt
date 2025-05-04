@@ -1,4 +1,4 @@
-package rudzki.marek.shelfie.login.widgets
+package rudzki.marek.shelfie.login.components
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
@@ -44,17 +44,14 @@ fun RotatingSlogan() {
         "The Next Chapter is Waiting"
     )
 
-
     var currentSlogan by remember { mutableStateOf(slogansList.random()) }
     var isVisible by remember { mutableStateOf(true) }
-
 
     LaunchedEffect(Unit) {
         while (true) {
             delay(5000)
             isVisible = false
             delay(800)
-
 
             var newSlogan: String
             do {
@@ -65,7 +62,6 @@ fun RotatingSlogan() {
             isVisible = true
         }
     }
-
 
     AnimatedVisibility(
         modifier = Modifier
