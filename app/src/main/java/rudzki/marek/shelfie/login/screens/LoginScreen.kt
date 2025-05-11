@@ -13,9 +13,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.ime
-import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -27,14 +25,19 @@ import androidx.compose.ui.Modifier
 import rudzki.marek.shelfie.login.components.ImageWithSlogan
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.platform.LocalDensity
+import androidx.hilt.navigation.compose.hiltViewModel
 import rudzki.marek.shelfie.login.components.LoginBox
 import rudzki.marek.shelfie.login.components.VerifyBox
+import rudzki.marek.shelfie.login.viewModel.LoginViewModel
 
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-fun LoginScreen(innerPaddingValues: PaddingValues) {
+fun LoginScreen(
+    onLoginSuccess: () -> Unit,
+    ) {
+    val viewModel: LoginViewModel = hiltViewModel()
+
     var loginBoxDisplayed by remember { mutableIntStateOf(0) }
 
     Column(
@@ -65,7 +68,8 @@ fun LoginScreen(innerPaddingValues: PaddingValues) {
                     )
 
                     1 -> VerifyBox(
-                        onLoginBoxChanged = { loginBoxDisplayed = it }
+                        onLoginBoxChanged = { loginBoxDisplayed = it },
+                        onLoginSuccess = { onLoginSuccess() }
                     )
                 }
             }

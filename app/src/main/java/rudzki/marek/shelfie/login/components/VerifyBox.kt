@@ -71,6 +71,7 @@ import rudzki.marek.shelfie.shared.TopBarWithBackButton
 @Composable
 fun VerifyBox(
     onLoginBoxChanged: (Int) -> Unit,
+    onLoginSuccess: () -> Unit,
     viewModel: LoginViewModel = viewModel()
 ) {
     var otpValues = remember { mutableStateListOf("", "", "", "", "", "") }
@@ -95,9 +96,7 @@ fun VerifyBox(
         viewModel.uiEvent.collect { event ->
             when (event) {
                 is UiEvent.LoginSuccess -> {
-//                    navController.navigate("home") {
-//                        popUpTo("login") { inclusive = true }
-//                    }
+                    onLoginSuccess()
                 }
                 is UiEvent.LoginError -> {
                     snackbarHostState.showSnackbar(event.message)
@@ -204,6 +203,7 @@ fun VerifyBox(
                 )
             } else {
                 Column (
+                    modifier = Modifier.padding(start = 15.dp)
                 ) {
                     Text(
                         text = "Didn't receive the code?",
