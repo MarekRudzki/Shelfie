@@ -7,8 +7,18 @@ import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.with
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.ime
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableIntStateOf
@@ -17,6 +27,7 @@ import androidx.compose.ui.Modifier
 import rudzki.marek.shelfie.login.components.ImageWithSlogan
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalDensity
 import rudzki.marek.shelfie.login.components.LoginBox
 import rudzki.marek.shelfie.login.components.VerifyBox
 
@@ -24,31 +35,39 @@ import rudzki.marek.shelfie.login.components.VerifyBox
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun LoginScreen(innerPaddingValues: PaddingValues) {
-    var loginBoxDisplayed by remember { mutableIntStateOf(1) }
+    var loginBoxDisplayed by remember { mutableIntStateOf(0) }
 
-    Column (
+    Column(
         modifier = Modifier
-            .background(color = MaterialTheme.colorScheme.background)
+            .background(MaterialTheme.colorScheme.background)
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState())
+            .padding(WindowInsets.ime.asPaddingValues())
     ) {
         ImageWithSlogan()
-        AnimatedContent(
-            targetState = loginBoxDisplayed,
-            transitionSpec = {
-                if (targetState > initialState) {
-                    slideInHorizontally { width -> width } with slideOutHorizontally { width -> -width }
-                } else {
-                    slideInHorizontally { width -> -width } with slideOutHorizontally { width -> width }
+        Box(
+            modifier = Modifier.fillMaxSize()
+        ) {
+            AnimatedContent(
+                targetState = loginBoxDisplayed,
+                transitionSpec = {
+                    if (targetState > initialState) {
+                        slideInHorizontally { width -> width } with slideOutHorizontally { width -> -width }
+                    } else {
+                        slideInHorizontally { width -> -width } with slideOutHorizontally { width -> width }
+                    }
+                },
+                label = "LoginBoxSwitcher"
+            ) { targetState ->
+                when (targetState) {
+                    0 -> LoginBox(
+                        onLoginBoxChanged = { loginBoxDisplayed = it }
+                    )
+
+                    1 -> VerifyBox(
+                        onLoginBoxChanged = { loginBoxDisplayed = it }
+                    )
                 }
-            },
-            label = "LoginBoxSwitcher"
-        ) { targetState ->
-            when (targetState) {
-                0 -> LoginBox(
-                    onLoginBoxChanged = { loginBoxDisplayed = it }
-                )
-                1 -> VerifyBox(
-                    onLoginBoxChanged = { loginBoxDisplayed = it }
-                )
             }
         }
     }

@@ -11,10 +11,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
@@ -25,13 +27,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import rudzki.marek.shelfie.login.viewModel.LoginViewModel
 import rudzki.marek.shelfie.login.viewModel.UiEvent
 import rudzki.marek.shelfie.shared.TopBarWithBackButton
-
 
 @Composable
 fun LoginBox(
@@ -55,9 +59,10 @@ fun LoginBox(
 
     Box(
         modifier = Modifier
-            .padding(top = 20.dp, start = 20.dp, end = 20.dp, bottom = WindowInsets.systemBars.asPaddingValues().calculateBottomPadding())
-            .clip(RoundedCornerShape(topEnd = 25.dp, topStart = 25.dp))
-            .fillMaxSize()
+            .padding(20.dp)
+            .clip(RoundedCornerShape(25.dp))
+            .height((LocalConfiguration.current.screenHeightDp.dp / 2.08f))
+            .fillMaxWidth()
             .background(color = Color.White)
     ) {
         Column(
@@ -97,11 +102,24 @@ fun LoginBox(
                         onLoginBoxChanged(1)
                     }
                 },
-                enabled = viewModel.isPhoneNumberValid,
+                enabled = viewModel.isPhoneNumberValid && !viewModel.isLoading,
                 colors = ButtonDefaults.buttonColors(
                 ),
             ) {
-                Text("Confirm")
+                if (viewModel.isLoading) {
+                    CircularProgressIndicator(
+                        modifier = Modifier.size(24.dp),
+                        color = Color.White,
+                        strokeWidth = 2.dp
+                    )
+                } else {
+                    Text(
+                        "Confirm",
+                        color = Color.White,
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold,
+                    )
+                }
             }
         }
         SnackbarHost(

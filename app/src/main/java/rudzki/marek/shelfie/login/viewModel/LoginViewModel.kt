@@ -38,7 +38,15 @@ class LoginViewModel @Inject constructor(
         private set
 
     private var verificationId: String? = null
+
     private var resendToken: PhoneAuthProvider.ForceResendingToken? = null
+
+    var isLoading by mutableStateOf(false)
+        private set
+
+    fun updateLoading(isLoading: Boolean) {
+        this.isLoading = isLoading
+    }
 
     fun updatePhoneNumber(number: String) {
         phoneNumber = "+48${number.trim()}"
@@ -53,6 +61,7 @@ class LoginViewModel @Inject constructor(
     }
 
     fun startVerification(activity: Activity, onCodeSent: () -> Unit) {
+        updateLoading(true)
         repository.startPhoneNumberVerification(
             activity = activity,
             phoneNumber = phoneNumber,
@@ -63,6 +72,7 @@ class LoginViewModel @Inject constructor(
                 }
 
                 override fun onVerificationFailed(e: FirebaseException) {
+                    updateLoading(false)
                     viewModelScope.launch {
                         _uiEvent.emit(UiEvent.LoginError("Verification failed: ${e.localizedMessage}"))
                     }
@@ -72,6 +82,7 @@ class LoginViewModel @Inject constructor(
                     verificationId = vId
                     resendToken = token
                     updateIsSmsSent(true)
+                    updateLoading(false)
                     onCodeSent()
                 }
             }

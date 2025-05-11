@@ -49,6 +49,7 @@ import androidx.compose.ui.input.key.KeyEventType
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.input.key.type
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
@@ -107,9 +108,10 @@ fun VerifyBox(
 
     Box(
         modifier = Modifier
-            .padding(top = 20.dp, start = 20.dp, end = 20.dp, bottom = WindowInsets.systemBars.asPaddingValues().calculateBottomPadding())
-            .clip(RoundedCornerShape(topEnd = 25.dp, topStart = 25.dp))
-            .fillMaxSize()
+            .padding(20.dp)
+            .clip(RoundedCornerShape(25.dp))
+            .height((LocalConfiguration.current.screenHeightDp.dp / 2.08f))
+            .fillMaxWidth()
             .background(color = Color.White)
     ) {
         Column(
@@ -195,7 +197,11 @@ fun VerifyBox(
             }
             Spacer(modifier = Modifier.height(16.dp))
             if (!resendEnabled) {
-                Text("Resend will be available in ${timer}s.", fontSize = 14.sp)
+                Text(
+                    modifier = Modifier.padding(10.dp),
+                    text = "Resend will be available in ${timer}s.",
+                    fontSize = 14.sp,
+                )
             } else {
                 Column (
                 ) {
@@ -231,7 +237,12 @@ fun VerifyBox(
                 shape = RoundedCornerShape(25.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
             ) {
-                Text(text = "Continue", color = Color.White, fontSize = 18.sp)
+                Text(
+                    text = "Continue",
+                    color = Color.White,
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold,
+                )
             }
         }
     }
