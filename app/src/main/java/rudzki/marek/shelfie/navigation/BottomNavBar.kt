@@ -1,11 +1,8 @@
 package rudzki.marek.shelfie.navigation
 
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.systemBars
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
@@ -22,13 +19,11 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.platform.LocalDensity
 
 @Composable
 fun BottomNavigationBar(navController: NavHostController) {
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = currentBackStackEntry?.destination?.route
-    val bottomInset = WindowInsets.systemBars.getBottom(LocalDensity.current)
 
     val items = listOf(
         BottomNavItem("homeScreen", Icons.Default.Home, "Home"),

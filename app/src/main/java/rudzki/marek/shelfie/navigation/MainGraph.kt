@@ -6,9 +6,17 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 
 fun NavGraphBuilder.mainGraph(rootNavController: NavHostController) {
-    navigation(startDestination = "home", route = "main") {
-        composable("home") {
-            HomeNavigation()
+    navigation(startDestination = "homeScreen", route = "main") {
+        composable("homeScreen") {
+            HomeNavigation(rootNavController)
+        }
+
+        composable("searchScreen") {
+            HomeNavigation(rootNavController)
+        }
+
+        composable("profileScreen") {
+            HomeNavigation(rootNavController)
         }
     }
 }

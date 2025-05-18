@@ -1,32 +1,39 @@
 package rudzki.marek.shelfie.navigation
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
+import androidx.compose.ui.Modifier
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
+import rudzki.marek.shelfie.account.screens.AccountScreen
 import rudzki.marek.shelfie.home.screens.HomeScreen
-import rudzki.marek.shelfie.profile.screens.ProfileScreen
 import rudzki.marek.shelfie.search.screens.SearchScreen
 
 @Composable
-fun HomeNavigation() {
-    val navController = rememberNavController()
-
+fun HomeNavigation(
+    navController: NavHostController
+) {
+    val backStackEntry = navController.currentBackStackEntryAsState()
+    val currentRoute = backStackEntry.value?.destination?.route
     Scaffold(
         bottomBar = {
             BottomNavigationBar(navController)
         }
     ) { innerPadding ->
-        NavHost(
-            navController = navController,
-            startDestination = "homeScreen",
-            modifier = androidx.compose.ui.Modifier.padding(innerPadding)
-        ) {
-            composable("homeScreen") { HomeScreen() }
-            composable("searchScreen") { SearchScreen() }
-            composable("profileScreen") { ProfileScreen() }
+        Box(Modifier.padding(innerPadding)) {
+            when (currentRoute) {
+                "homeScreen" -> HomeScreen()
+                "searchScreen" -> SearchScreen()
+                "profileScreen" -> AccountScreen(
+                    onNavigateToLogin = {
+                        navController.navigate("login") {
+                            popUpTo("auth") { inclusive = true }
+                        }
+                    }
+                )
+            }
         }
     }
 }

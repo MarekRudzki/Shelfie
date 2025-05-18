@@ -22,7 +22,7 @@ class MainActivity : ComponentActivity() {
 
                 NavHost(
                     navController = navController,
-                    startDestination = "main" //temp "auth"
+                    startDestination = "auth"
                 ) {
                     authGraph(navController)
                     mainGraph(navController)
