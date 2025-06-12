@@ -32,7 +32,6 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import rudzki.marek.shelfie.login.viewModel.LoginViewModel
 import rudzki.marek.shelfie.login.viewModel.UiEvent
-import rudzki.marek.shelfie.shared.TopBarWithBackButton
 
 @Composable
 fun LoginBox(

@@ -59,7 +59,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.delay
 import rudzki.marek.shelfie.login.viewModel.LoginViewModel
 import rudzki.marek.shelfie.login.viewModel.UiEvent
-import rudzki.marek.shelfie.shared.TopBarWithBackButton
 
 
 @Composable

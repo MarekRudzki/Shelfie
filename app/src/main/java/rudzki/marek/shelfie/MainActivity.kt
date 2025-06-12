@@ -5,10 +5,11 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
-import rudzki.marek.shelfie.navigation.authGraph
-import rudzki.marek.shelfie.navigation.mainGraph
+import rudzki.marek.shelfie.home.screens.HomeScreen
+import rudzki.marek.shelfie.login.screens.LoginScreen
 import rudzki.marek.shelfie.ui.theme.ShelfieTheme
 
 @AndroidEntryPoint
@@ -22,10 +23,27 @@ class MainActivity : ComponentActivity() {
 
                 NavHost(
                     navController = navController,
-                    startDestination = "auth"
+                    startDestination = "home"
                 ) {
-                    authGraph(navController)
-                    mainGraph(navController)
+                    composable("login") {
+                        LoginScreen(
+                            onLoginSuccess = {
+                                navController.navigate("home") {
+                                    popUpTo("login") { inclusive = true }
+                                }
+                            }
+                        )
+                    }
+
+                    composable("home") {
+                        HomeScreen(
+                            onNavigateToLogin = {
+                                navController.navigate("login") {
+                                    popUpTo("auth") { inclusive = true }
+                                }
+                            }
+                        )
+                    }
                 }
             }
         }

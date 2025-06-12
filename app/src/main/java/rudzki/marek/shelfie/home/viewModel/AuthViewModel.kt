@@ -1,9 +1,9 @@
-package rudzki.marek.shelfie.account.viewModel
+package rudzki.marek.shelfie.home.viewModel
 
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import rudzki.marek.shelfie.account.repositories.AuthRepository
+import rudzki.marek.shelfie.home.repositories.AuthRepository
 
 class AuthViewModel(
     private val repo: AuthRepository = AuthRepository()

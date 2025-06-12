@@ -1,21 +1,79 @@
 package rudzki.marek.shelfie.home.screens
 
+import android.widget.Toast
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBars
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import androidx.compose.runtime.*
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.lifecycle.viewmodel.compose.viewModel
+import rudzki.marek.shelfie.home.components.HomeAppBar
+import rudzki.marek.shelfie.home.components.SearchBox
+import rudzki.marek.shelfie.home.viewModel.AuthUiState
+import rudzki.marek.shelfie.home.viewModel.AuthViewModel
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(
+    authViewModel: AuthViewModel = viewModel(),
+    onNavigateToLogin: () -> Unit,
+) {
+    val uiState by authViewModel.uiState.collectAsState()
+    val context = LocalContext.current
+    val focusManager =  LocalFocusManager.current
+
+    LaunchedEffect(uiState) {
+        if (uiState is AuthUiState.Deleted || uiState is AuthUiState.LoggedOut) {
+            onNavigateToLogin()
+        }
+        if (uiState is AuthUiState.Error) {
+            Toast.makeText(
+                context,
+                (uiState as AuthUiState.Error).message,
+                Toast.LENGTH_LONG
+            ).show()
+            authViewModel.resetToIdle()
+        }
+    }
+
     Box(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = MaterialTheme.colorScheme.background)
+            .padding(WindowInsets.systemBars.asPaddingValues())
+            .clickable(
+                indication = null,
+                interactionSource = remember { MutableInteractionSource() }
+            ) {
+                focusManager.clearFocus()
+            }
     ) {
-        Text(
+        Column (
             modifier = Modifier
-                .align(Alignment.Center),
-            text = "Home"
-        )
+                .fillMaxSize()
+                .padding(8.dp),
+            horizontalAlignment = Alignment.End
+        ) {
+            HomeAppBar(authViewModel)
+            SearchBox(
+                onSearch = {
+                    println("Searched text: $it")
+                }
+            )
+        }
     }
 }
+
+
