@@ -1,4 +1,4 @@
-package rudzki.marek.shelfie.login.components
+package rudzki.marek.shelfie.login.view.components
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween

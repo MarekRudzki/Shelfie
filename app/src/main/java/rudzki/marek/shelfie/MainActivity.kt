@@ -8,8 +8,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
-import rudzki.marek.shelfie.home.screens.HomeScreen
-import rudzki.marek.shelfie.login.screens.LoginScreen
+import rudzki.marek.shelfie.home.view.HomeScreen
+import rudzki.marek.shelfie.login.view.LoginScreen
 import rudzki.marek.shelfie.ui.theme.ShelfieTheme
 
 @AndroidEntryPoint

@@ -1,4 +1,4 @@
-package rudzki.marek.shelfie.home.components
+package rudzki.marek.shelfie.home.view.components
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.interaction.MutableInteractionSource

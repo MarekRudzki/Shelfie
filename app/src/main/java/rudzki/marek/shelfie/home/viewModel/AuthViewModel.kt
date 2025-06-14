@@ -1,20 +1,25 @@
 package rudzki.marek.shelfie.home.viewModel
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import rudzki.marek.shelfie.home.repositories.AuthRepository
+import rudzki.marek.shelfie.login.model.AuthRepository
+import javax.inject.Inject
 
-class AuthViewModel(
-    private val repo: AuthRepository = AuthRepository()
-): ViewModel() {
+@HiltViewModel
+class AuthViewModel @Inject constructor(
+    private val repository: AuthRepository
+) : ViewModel() {
     private val _uiState = MutableStateFlow<AuthUiState>(AuthUiState.Idle)
     val uiState: StateFlow<AuthUiState> = _uiState
 
     fun logout() {
         _uiState.value = AuthUiState.LoadingLogout
 
-        repo.logout()
+        repository.logout()
             .addOnSuccessListener {
             _uiState.value = AuthUiState.LoggedOut
         }
@@ -26,7 +31,7 @@ class AuthViewModel(
     fun deleteAccount() {
         _uiState.value = AuthUiState.LoadingDelete
 
-        repo.deleteUser()
+        repository.deleteUser()
             .addOnSuccessListener {
                 _uiState.value = AuthUiState.Deleted
             }

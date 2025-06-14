@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalMaterial3Api::class)
 
-package rudzki.marek.shelfie.login.components
+package rudzki.marek.shelfie.login.view.components
 
 import android.app.Activity
 import androidx.compose.foundation.background

@@ -1,4 +1,4 @@
-package rudzki.marek.shelfie.login.screens
+package rudzki.marek.shelfie.login.view
 
 
 import androidx.compose.animation.AnimatedContent
@@ -21,12 +21,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import rudzki.marek.shelfie.login.components.ImageWithSlogan
+import rudzki.marek.shelfie.login.view.components.ImageWithSlogan
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.hilt.navigation.compose.hiltViewModel
-import rudzki.marek.shelfie.login.components.LoginBox
-import rudzki.marek.shelfie.login.components.VerifyBox
+import rudzki.marek.shelfie.login.view.components.LoginBox
+import rudzki.marek.shelfie.login.view.components.VerifyBox
 import rudzki.marek.shelfie.login.viewModel.LoginViewModel
 
 

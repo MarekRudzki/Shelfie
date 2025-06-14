@@ -1,4 +1,4 @@
-package rudzki.marek.shelfie.login.components
+package rudzki.marek.shelfie.login.view.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border

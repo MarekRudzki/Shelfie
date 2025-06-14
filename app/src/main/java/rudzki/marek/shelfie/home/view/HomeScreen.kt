@@ -1,4 +1,4 @@
-package rudzki.marek.shelfie.home.screens
+package rudzki.marek.shelfie.home.view
 
 import android.widget.Toast
 import androidx.compose.foundation.background
@@ -19,15 +19,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
-import rudzki.marek.shelfie.home.components.HomeAppBar
-import rudzki.marek.shelfie.home.components.SearchBox
+import rudzki.marek.shelfie.home.view.components.HomeAppBar
+import rudzki.marek.shelfie.home.view.components.SearchBox
 import rudzki.marek.shelfie.home.viewModel.AuthUiState
 import rudzki.marek.shelfie.home.viewModel.AuthViewModel
 
 @Composable
 fun HomeScreen(
-    authViewModel: AuthViewModel = viewModel(),
+     authViewModel: AuthViewModel = hiltViewModel(),
     onNavigateToLogin: () -> Unit,
 ) {
     val uiState by authViewModel.uiState.collectAsState()

@@ -15,7 +15,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
-import rudzki.marek.shelfie.login.repositories.AuthRepository
+import rudzki.marek.shelfie.login.model.AuthRepository
 import javax.inject.Inject
 
 

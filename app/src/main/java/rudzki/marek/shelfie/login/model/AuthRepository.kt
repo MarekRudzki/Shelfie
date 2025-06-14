@@ -1,6 +1,8 @@
-package rudzki.marek.shelfie.login.repositories
+package rudzki.marek.shelfie.login.model
 
 import android.app.Activity
+import com.google.android.gms.tasks.Task
+import com.google.android.gms.tasks.Tasks
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthOptions
@@ -41,5 +43,15 @@ class AuthRepository @Inject constructor(
                     onResult(false, task.exception)
                 }
             }
+    }
+
+    fun logout(): Task<Void> {
+        auth.signOut()
+        return Tasks.forResult(null)
+    }
+
+    fun deleteUser(): Task<Void> {
+        val user = auth.currentUser ?: return Tasks.forException(IllegalStateException("User not logged"))
+        return user.delete()
     }
 }
