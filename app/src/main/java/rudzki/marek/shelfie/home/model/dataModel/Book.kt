@@ -15,14 +15,4 @@ data class Book (
     val numberOfPages: Double?,
     val description: String?,
     val rating: Rating?,
-    )
-
-
-data class Author(
-    val id: Long,
-    val name: String?,
-)
-
-data class Rating(
-    val average: Double?,
 )
