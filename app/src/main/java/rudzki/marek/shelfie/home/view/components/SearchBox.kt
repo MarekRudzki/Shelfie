@@ -51,6 +51,7 @@ fun SearchBox(
             onValueChange = {
                 searchText = it
             },
+            shape = RoundedCornerShape(10.dp),
             keyboardOptions = KeyboardOptions.Default.copy(
                 imeAction = ImeAction.Done
             ),
@@ -64,11 +65,13 @@ fun SearchBox(
             colors = TextFieldDefaults.colors(
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent,
-                disabledIndicatorColor = Color.Transparent
+                disabledIndicatorColor = Color.Transparent,
+                focusedContainerColor = MaterialTheme.colorScheme.surface,
+                unfocusedContainerColor = MaterialTheme.colorScheme.surface,
             ),
             value = searchText,
             label = {
-                Text("Type here...")
+                Text("Search for book..")
             },
             trailingIcon = {
                 IconButton (

@@ -20,7 +20,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
+import rudzki.marek.shelfie.home.view.components.CategoriesGrid
 import rudzki.marek.shelfie.home.view.components.HomeAppBar
 import rudzki.marek.shelfie.home.view.components.SearchBox
 import rudzki.marek.shelfie.home.viewModel.AuthUiState
@@ -28,7 +28,7 @@ import rudzki.marek.shelfie.home.viewModel.AuthViewModel
 
 @Composable
 fun HomeScreen(
-     authViewModel: AuthViewModel = hiltViewModel(),
+    authViewModel: AuthViewModel = hiltViewModel(),
     onNavigateToLogin: () -> Unit,
 ) {
     val uiState by authViewModel.uiState.collectAsState()
@@ -68,11 +68,14 @@ fun HomeScreen(
             horizontalAlignment = Alignment.End
         ) {
             HomeAppBar(authViewModel)
+
             SearchBox(
                 onSearch = {
                     println("Searched text: $it")
                 }
             )
+
+            CategoriesGrid()
         }
     }
 }
