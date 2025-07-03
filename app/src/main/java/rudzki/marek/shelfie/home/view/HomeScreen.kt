@@ -1,5 +1,6 @@
 package rudzki.marek.shelfie.home.view
 
+import android.net.Uri
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -20,6 +21,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import rudzki.marek.shelfie.home.view.components.CategoriesGrid
 import rudzki.marek.shelfie.home.view.components.HomeAppBar
 import rudzki.marek.shelfie.home.view.components.SearchBox
@@ -29,6 +31,7 @@ import rudzki.marek.shelfie.home.viewModel.AuthViewModel
 @Composable
 fun HomeScreen(
     authViewModel: AuthViewModel = hiltViewModel(),
+    navController: NavController,
     onNavigateToLogin: () -> Unit,
 ) {
     val uiState by authViewModel.uiState.collectAsState()
@@ -70,12 +73,22 @@ fun HomeScreen(
             HomeAppBar(authViewModel)
 
             SearchBox(
-                onSearch = {
-                    println("Searched text: $it")
+                onSearch = { it ->
+                   if (it != "") {
+                       navController.navigate("search_result?query=${Uri.encode(it)}&genre=") {
+                           popUpTo("home")
+                       }
+                   }
                 }
             )
 
-            CategoriesGrid()
+            CategoriesGrid(
+                onCategorySelected = { it ->
+                    navController.navigate("search_result?query=&genre=${Uri.encode(it)}") {
+                        popUpTo("home")
+                    }
+                }
+            )
         }
     }
 }

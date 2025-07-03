@@ -26,7 +26,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun CategoriesGrid() {
+fun CategoriesGrid(
+    onCategorySelected: (String) -> Unit,
+) {
     val screenWidth = LocalConfiguration.current.screenWidthDp.dp
 
     val rawGenres = listOf(
@@ -161,7 +163,7 @@ fun CategoriesGrid() {
                 shape = RoundedCornerShape(10.dp),
             )
             .clickable {
-
+                onCategorySelected(genre.label)
             }
     ) {
         Text(

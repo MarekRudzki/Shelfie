@@ -24,12 +24,13 @@ class BookNetworkRepository @Inject constructor(
         }
     }
 
-    suspend fun searchBook(
+    suspend fun searchBooks(
         query: String?,
         offset: Int,
         genre: String?,
     ): Result<SearchBookResponse> {
         return try {
+            Log.i("request data", "Query: $query, Offset: $offset, Genre: $genre")
             val response = bookService.searchBooks(
                 query = query ?: "null",
                 offset = offset,

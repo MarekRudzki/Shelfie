@@ -1,5 +1,6 @@
 package rudzki.marek.shelfie.home.viewModel
 
+import androidx.compose.runtime.MutableState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,7 +24,9 @@ class BookViewModel @Inject constructor(
 
     private val _searchBooks = MutableStateFlow<List<SearchBook>>(emptyList())
     val searchBooks: StateFlow<List<SearchBook>> = _searchBooks
-    private var isLoading = false
+
+    private var _isLoading = MutableStateFlow(false)
+    val isLoading: StateFlow<Boolean> = _isLoading
 
     fun fetchBook(id: Long) {
         viewModelScope.launch {
@@ -35,17 +38,17 @@ class BookViewModel @Inject constructor(
         }
     }
 
-    fun searchBook(
-        query: String?,
+    fun searchBooks(
+        query: String? = null,
         offset: Int,
-        genre: String?,
+        genre: String? = null,
         isLoadMore: Boolean = false,
     ) {
-        if (isLoading) return
-        isLoading = true
+        if (_isLoading.value) return
+        _isLoading.value = true
 
         viewModelScope.launch {
-            val result = repository.searchBook(
+            val result = repository.searchBooks(
                 query = query,
                 offset = offset,
                 genre = genre
@@ -61,6 +64,8 @@ class BookViewModel @Inject constructor(
                     }
                 }
                 .onFailure { _error.value = it.message }
+
+            _isLoading.value = false
         }
     }
 }
