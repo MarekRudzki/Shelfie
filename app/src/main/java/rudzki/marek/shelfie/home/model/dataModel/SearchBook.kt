@@ -4,4 +4,5 @@ data class SearchBook(
     val id: Long,
     val title: String?,
     val image: String?,
+    val authors: List<Author> = emptyList(),
 )

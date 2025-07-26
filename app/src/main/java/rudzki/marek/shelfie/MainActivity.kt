@@ -70,12 +70,26 @@ class MainActivity : ComponentActivity() {
 
                         SearchResultScreen(
                             query = query,
-                            genre = genre
+                            genre = genre,
+                            navController = navController,
                         )
                     }
 
-                    composable("book_details") {
-                        BookDetailsScreen()
+                    composable(
+                        route = "book_details?bookId={bookId}",
+                        arguments = listOf(
+                            navArgument("bookId") {
+                                type = NavType.LongType
+                                defaultValue = 0
+                                nullable = false
+                            }
+                        )
+                    ) { backStackEntry ->
+                        val bookId = backStackEntry.arguments?.getLong("bookId") ?: 0
+
+                        BookDetailsScreen(
+                            bookId = bookId
+                        )
                     }
                 }
             }

@@ -20,6 +20,9 @@ interface BookService {
         @Query("offset") offset: Int,
         @Query("number") number: Int = 30,
         @Query("genres") genres: String? = null,
-        @Query("sort") sort: String? = "rating"
+        @Query("sort") sort: String? = "rating",
+        // Min and max rating to exclude books with only 1 review or 0 reviews
+        @Query("min-rating") minRating: Double = 0.1,
+        @Query("max-rating") maxRating: Double = 0.99,
     ) : Response<SearchBookResponse>
 }

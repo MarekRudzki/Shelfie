@@ -28,13 +28,21 @@ class BookViewModel @Inject constructor(
     private var _isLoading = MutableStateFlow(false)
     val isLoading: StateFlow<Boolean> = _isLoading
 
+    private var _isBookLoading = MutableStateFlow(false)
+    val isBookLoading: StateFlow<Boolean> = _isBookLoading
+
     fun fetchBook(id: Long) {
+        if (_isBookLoading.value) return
+        _isBookLoading.value = true
+
         viewModelScope.launch {
             val result = repository.getBookById(id)
 
             result
                 .onSuccess { _book.value = it }
                 .onFailure { _error.value = it.message }
+
+            _isBookLoading.value = false
         }
     }
 
