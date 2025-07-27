@@ -29,6 +29,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -68,7 +69,7 @@ fun VerifyBox(
     viewModel: LoginViewModel = viewModel()
 ) {
     var otpValues = remember { mutableStateListOf("", "", "", "", "", "") }
-    var timer by remember { mutableStateOf(60) }
+    var timer by remember { mutableIntStateOf(60) }
     var resendEnabled by remember { mutableStateOf(false) }
     val focusRequesters = List(6) { FocusRequester() }
     val focusManager = LocalFocusManager.current

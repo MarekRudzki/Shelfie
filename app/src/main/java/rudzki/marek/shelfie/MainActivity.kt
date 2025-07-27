@@ -88,7 +88,8 @@ class MainActivity : ComponentActivity() {
                         val bookId = backStackEntry.arguments?.getLong("bookId") ?: 0
 
                         BookDetailsScreen(
-                            bookId = bookId
+                            bookId = bookId,
+                            navController = navController,
                         )
                     }
                 }

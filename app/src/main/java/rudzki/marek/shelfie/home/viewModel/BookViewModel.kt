@@ -1,6 +1,5 @@
 package rudzki.marek.shelfie.home.viewModel
 
-import androidx.compose.runtime.MutableState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel

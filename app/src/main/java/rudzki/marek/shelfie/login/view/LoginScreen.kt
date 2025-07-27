@@ -24,10 +24,8 @@ import androidx.compose.ui.Modifier
 import rudzki.marek.shelfie.login.view.components.ImageWithSlogan
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
-import androidx.hilt.navigation.compose.hiltViewModel
 import rudzki.marek.shelfie.login.view.components.LoginBox
 import rudzki.marek.shelfie.login.view.components.VerifyBox
-import rudzki.marek.shelfie.login.viewModel.LoginViewModel
 
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -35,8 +33,6 @@ import rudzki.marek.shelfie.login.viewModel.LoginViewModel
 fun LoginScreen(
     onLoginSuccess: () -> Unit,
     ) {
-    val viewModel: LoginViewModel = hiltViewModel()
-
     var loginBoxDisplayed by remember { mutableIntStateOf(0) }
 
     Column(
