@@ -29,14 +29,14 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import rudzki.marek.shelfie.login.viewModel.LoginViewModel
 import rudzki.marek.shelfie.login.viewModel.UiEvent
 
 @Composable
 fun LoginBox(
     onLoginBoxChanged: (Int) -> Unit,
-    viewModel: LoginViewModel = viewModel()
+    viewModel: LoginViewModel = hiltViewModel()
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
     val context = LocalContext.current

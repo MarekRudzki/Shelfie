@@ -56,7 +56,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import kotlinx.coroutines.delay
 import rudzki.marek.shelfie.login.viewModel.LoginViewModel
 import rudzki.marek.shelfie.login.viewModel.UiEvent
@@ -66,7 +66,7 @@ import rudzki.marek.shelfie.login.viewModel.UiEvent
 fun VerifyBox(
     onLoginBoxChanged: (Int) -> Unit,
     onLoginSuccess: () -> Unit,
-    viewModel: LoginViewModel = viewModel()
+    viewModel: LoginViewModel = hiltViewModel()
 ) {
     var otpValues = remember { mutableStateListOf("", "", "", "", "", "") }
     var timer by remember { mutableIntStateOf(60) }
