@@ -1,6 +1,7 @@
 package rudzki.marek.shelfie.home.model.network
 
 import android.util.Log
+import okhttp3.HttpUrl
 import rudzki.marek.shelfie.home.model.dataModel.Book
 import rudzki.marek.shelfie.home.model.dataModel.SearchBookResponse
 import javax.inject.Inject
@@ -30,12 +31,24 @@ class BookNetworkRepository @Inject constructor(
         genre: String?,
     ): Result<SearchBookResponse> {
         return try {
-            Log.i("request data", "Query: $query, Offset: $offset, Genre: $genre")
+            val requestQuery = query ?: "null"
+            val genresParam = genre?.takeIf { it.isNotBlank() && it != "null" }
+
+            Log.i("request data", "Query: $requestQuery, Offset: $offset, Genre: $genresParam")
+
+            val minRatingParam = if (!genresParam.isNullOrBlank() && query.isNullOrBlank()) 0.1 else null
+            val maxRatingParam = if (!genresParam.isNullOrBlank() && query.isNullOrBlank()) 0.99 else null
+
+            Log.i("request data", "Query: $requestQuery, Offset: $offset, Genre: $genresParam, minRating: $minRatingParam, maxRating: $maxRatingParam")
+
             val response = bookService.searchBooks(
-                query = query ?: "null",
+                query = if (query.isNullOrBlank()) null else query,
                 offset = offset,
-                genres = genre
+                genres = genresParam,
+                minRating = minRatingParam,
+                maxRating = maxRatingParam
             )
+
             Log.e("response", "Code: ${response.code()} Body: ${response.body()} ErrorBody: ${response.errorBody()?.string()}")
 
             if (response.isSuccessful) {

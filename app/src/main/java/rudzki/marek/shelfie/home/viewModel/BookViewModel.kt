@@ -48,7 +48,7 @@ class BookViewModel @Inject constructor(
     fun searchBooks(
         query: String? = null,
         offset: Int,
-        genre: String? = null,
+        genre: String? = "",
         isLoadMore: Boolean = false,
     ) {
         if (_isLoading.value) return

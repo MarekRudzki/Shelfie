@@ -75,7 +75,7 @@ fun HomeScreen(
             SearchBox(
                 onSearch = { it ->
                    if (it != "") {
-                       navController.navigate("search_result?query=${Uri.encode(it)}&genre=") {
+                       navController.navigate("search_result?query=${Uri.encode(it)}") {
                            popUpTo("home")
                        }
                    }

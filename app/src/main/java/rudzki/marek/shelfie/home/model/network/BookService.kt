@@ -21,8 +21,9 @@ interface BookService {
         @Query("number") number: Int = 30,
         @Query("genres") genres: String? = null,
         @Query("sort") sort: String? = "rating",
-        // Min and max rating to exclude books with only 1 review or 0 reviews
-        @Query("min-rating") minRating: Double = 0.1,
-        @Query("max-rating") maxRating: Double = 0.99,
+        // Min and max rating to exclude books with only 1 review or 0 reviews.
+        // Default null - API returns 500 when using min/max rating with query. Works only with genres.
+        @Query("min-rating") minRating: Double? = null,
+        @Query("max-rating") maxRating: Double? = null
     ) : Response<SearchBookResponse>
 }

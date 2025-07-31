@@ -40,10 +40,12 @@ fun SearchResultScreen(
 
     var loadMore by remember { mutableStateOf(false) }
 
+    val safeGenre = genre?.takeIf { it.isNotBlank() && it != "null" }
+
     LaunchedEffect(query, genre) {
         bookViewModel.searchBooks(
             query = query,
-            genre = genre,
+            genre = safeGenre,
             offset = 0
         )
     }
