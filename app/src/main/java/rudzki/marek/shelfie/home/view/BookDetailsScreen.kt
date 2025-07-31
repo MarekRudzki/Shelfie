@@ -1,5 +1,6 @@
 package rudzki.marek.shelfie.home.view
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -42,6 +43,8 @@ import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.StarBorder
 import androidx.compose.material.icons.filled.StarHalf
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.ui.text.TextStyle
 import androidx.navigation.NavController
 import rudzki.marek.shelfie.home.view.components.CustomAppBar
 
@@ -56,6 +59,12 @@ fun BookDetailsScreen(
     val isBookLoading by bookViewModel.isBookLoading.collectAsState()
     val scrollState = rememberScrollState()
 
+    val rating = book?.rating?.average ?: 0.0
+    val starsOutOf5 = (rating * 100) / 20.0
+
+    val fullStars = starsOutOf5.toInt()
+    val hasHalfStar = (starsOutOf5 - fullStars) > 0.5
+
     LaunchedEffect(bookId) {
         bookViewModel.fetchBook(bookId)
     }
@@ -63,6 +72,9 @@ fun BookDetailsScreen(
     Box(
         modifier = Modifier
             .fillMaxSize()
+            .background(
+                color = MaterialTheme.colorScheme.background
+            )
             .padding(WindowInsets.navigationBars.asPaddingValues())
     ) {
         Column {
@@ -104,27 +116,29 @@ fun BookDetailsScreen(
                         Text(
                             text = book?.title ?: "",
                             fontSize = 20.sp,
-                            fontWeight = FontWeight.Bold
+                            fontWeight = FontWeight.Bold,
+                            style = TextStyle(
+                                color = MaterialTheme.colorScheme.primary
+                            )
                         )
                         Spacer(modifier = Modifier.height(8.dp))
                         Text(
                             text = "Author: ${book?.authors?.firstOrNull()?.name ?: "Unknown"}",
-                            fontSize = 16.sp
+                            fontSize = 16.sp,
+                            style = TextStyle(
+                                color = MaterialTheme.colorScheme.primary
+                            )
                         )
                         Spacer(modifier = Modifier.height(8.dp))
                         if (book?.publishDate != null)
                             Text(
                                 text = "Publish date: ${book?.publishDate?.toInt()}",
-                                fontSize = 16.sp
+                                fontSize = 16.sp,
+                                style = TextStyle(
+                                    color = MaterialTheme.colorScheme.primary
+                                )
                             )
                         Spacer(modifier = Modifier.height(16.dp))
-
-                        val rating = book?.rating?.average ?: 0.0
-                        val starsOutOf5 = (rating * 100) / 20.0
-
-                        val fullStars = starsOutOf5.toInt()
-                        val hasHalfStar = (starsOutOf5 - fullStars) > 0.5
-
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             repeat(5) { index ->
                                 Icon(
@@ -134,13 +148,17 @@ fun BookDetailsScreen(
                                         else -> Icons.Default.StarBorder
                                     },
                                     contentDescription = null,
-                                    modifier = Modifier.size(20.dp)
+                                    modifier = Modifier.size(20.dp),
+                                    tint = MaterialTheme.colorScheme.primary
                                 )
                             }
                             Spacer(modifier = Modifier.width(8.dp))
                             Text(
                                 text = "${String.format("%.1f", starsOutOf5)} / 5",
-                                fontSize = 14.sp
+                                fontSize = 14.sp,
+                                style = TextStyle(
+                                    color = MaterialTheme.colorScheme.primary
+                                )
                             )
                         }
                     }
@@ -148,7 +166,10 @@ fun BookDetailsScreen(
                 Text(
                     modifier = Modifier.padding(vertical = 10.dp),
                     text = book?.description ?: "",
-                    fontSize = 15.sp
+                    fontSize = 15.sp,
+                    style = TextStyle(
+                        color = MaterialTheme.colorScheme.primary
+                    )
                 )
 
                 if (isBookLoading) {

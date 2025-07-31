@@ -67,7 +67,10 @@ fun HomeScreen(
         Column (
             modifier = Modifier
                 .fillMaxSize()
-                .padding(8.dp),
+                .padding(
+                    start = 8.dp,
+                    end = 8.dp
+                ),
             horizontalAlignment = Alignment.End
         ) {
             HomeAppBar(authViewModel)

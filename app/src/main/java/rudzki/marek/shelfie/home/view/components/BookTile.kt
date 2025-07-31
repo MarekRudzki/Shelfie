@@ -1,5 +1,6 @@
 package rudzki.marek.shelfie.home.view.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -12,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -43,7 +45,7 @@ fun BookTile(
             .padding(top = 10.dp)
             .border(
                 width = 1.5.dp,
-                color = Color.Black,
+                color = MaterialTheme.colorScheme.primary,
                 shape = RoundedCornerShape(10.dp)
             )
             .clip(RoundedCornerShape(10.dp))
@@ -54,7 +56,11 @@ fun BookTile(
             )
     ) {
         Row(
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier
+                .fillMaxSize()
+                .background(
+                    color = MaterialTheme.colorScheme.onBackground
+                )
         ) {
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
@@ -83,7 +89,7 @@ fun BookTile(
                     style = TextStyle(
                         fontWeight = FontWeight.W800,
                         fontSize = 19.sp,
-                        color = Color.Gray
+                        color = Color(177,177,199)
                     ),
                     textAlign = TextAlign.Center
                 )
@@ -93,7 +99,8 @@ fun BookTile(
                     text = book.title ?: "",
                     style = TextStyle(
                         fontWeight = FontWeight.W600,
-                        fontSize = 17.sp
+                        fontSize = 17.sp,
+                        color = MaterialTheme.colorScheme.primary
                     ),
                     textAlign = TextAlign.Center,
                     overflow = TextOverflow.Ellipsis,

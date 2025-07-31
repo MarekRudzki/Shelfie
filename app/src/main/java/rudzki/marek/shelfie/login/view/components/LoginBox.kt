@@ -14,6 +14,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
@@ -26,7 +27,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -59,7 +62,9 @@ fun LoginBox(
             .clip(RoundedCornerShape(25.dp))
             .height((LocalConfiguration.current.screenHeightDp.dp / 2.08f))
             .fillMaxWidth()
-            .background(color = Color.White)
+            .background(
+                color = MaterialTheme.colorScheme.onBackground
+            )
     ) {
         Column(
             modifier = Modifier.fillMaxSize()
@@ -72,7 +77,12 @@ fun LoginBox(
                 modifier = Modifier
                     .padding(horizontal = 16.dp)
                     .align(Alignment.CenterHorizontally),
-                text = "Please type your phone number to login or register."
+                text = "Please type your phone number to login or register.",
+                style = TextStyle(
+                    color = MaterialTheme.colorScheme.primary,
+                    fontSize = 17.sp,
+                    textAlign = TextAlign.Center
+                )
             )
             Spacer(modifier = Modifier.height(8.dp))
             PhoneNumberInput(
@@ -85,7 +95,12 @@ fun LoginBox(
                 modifier = Modifier
                     .padding(horizontal = 16.dp)
                     .align(Alignment.CenterHorizontally),
-                text = "We will send a SMS to verify your account."
+                text = "We will send a SMS to verify your account.",
+                style = TextStyle(
+                    color = MaterialTheme.colorScheme.primary,
+                    fontSize = 17.sp,
+                    textAlign = TextAlign.Center
+                )
             )
             Spacer(modifier = Modifier.weight(1f))
             Button(
@@ -100,6 +115,7 @@ fun LoginBox(
                 },
                 enabled = viewModel.isPhoneNumberValid && !viewModel.isLoading,
                 colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.primary
                 ),
             ) {
                 if (viewModel.isLoading) {
@@ -111,7 +127,7 @@ fun LoginBox(
                 } else {
                     Text(
                         "Confirm",
-                        color = Color.White,
+                        color = MaterialTheme.colorScheme.background,
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Bold,
                     )

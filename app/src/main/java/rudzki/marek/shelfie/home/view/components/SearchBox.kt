@@ -44,7 +44,7 @@ fun SearchBox(
                 .fillMaxWidth()
                 .padding(horizontal = 10.dp)
                 .border(
-                    color = if (isFocused ) MaterialTheme.colorScheme.primary else Color.Gray,
+                    color = if (isFocused ) MaterialTheme.colorScheme.secondary else Color.Gray,
                     width = 1.dp,
                     shape = RoundedCornerShape(10.dp)
                 ),
@@ -66,8 +66,11 @@ fun SearchBox(
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent,
                 disabledIndicatorColor = Color.Transparent,
-                focusedContainerColor = MaterialTheme.colorScheme.surface,
-                unfocusedContainerColor = MaterialTheme.colorScheme.surface,
+                focusedContainerColor = MaterialTheme.colorScheme.primary,
+                unfocusedContainerColor = MaterialTheme.colorScheme.primary,
+                focusedLabelColor = Color.Black,
+                unfocusedLabelColor = Color.Black,
+                cursorColor = Color.Black
             ),
             value = searchText,
             label = {
@@ -82,7 +85,7 @@ fun SearchBox(
                     Icon(
                         imageVector = Icons.Default.Search,
                         contentDescription = "Search Icon",
-                        tint = MaterialTheme.colorScheme.primary,
+                        tint = MaterialTheme.colorScheme.onBackground,
 
                     )
                 }

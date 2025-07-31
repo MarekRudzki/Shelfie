@@ -88,11 +88,13 @@ class LoginViewModel @Inject constructor(
     }
 
     fun verifyCode(code: String) {
+        updateLoading(true)
         val vId = verificationId
         if (vId != null) {
             val credential = PhoneAuthProvider.getCredential(vId, code)
             signInWithCredential(credential)
         } else {
+            updateLoading(false)
             viewModelScope.launch {
                 _uiEvent.emit(UiEvent.LoginError("Verification ID is null. Try restarting the process."))
             }
@@ -103,8 +105,10 @@ class LoginViewModel @Inject constructor(
         repository.signInWithCredential(credential) { success, exception ->
             viewModelScope.launch {
                 if (success) {
+                    updateLoading(false)
                     _uiEvent.emit(UiEvent.LoginSuccess)
                 } else {
+                    updateLoading(false)
                     val message = exception?.localizedMessage ?: "Unknown error during login"
                     _uiEvent.emit(UiEvent.LoginError(message))
                 }

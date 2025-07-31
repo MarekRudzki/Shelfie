@@ -139,7 +139,7 @@ fun CategoriesGrid(
     }
 
     LazyVerticalGrid(
-        modifier = Modifier.padding(vertical = 10.dp),
+        modifier = Modifier.padding(top = 5.dp),
         columns = GridCells.Fixed(2),
     ) {
         items(bookGenres) {
@@ -157,7 +157,7 @@ fun CategoriesGrid(
                 shape = RoundedCornerShape(10.dp),
                 )
             .background(
-                color = MaterialTheme.colorScheme.surface,
+                color = MaterialTheme.colorScheme.onBackground,
                 shape = RoundedCornerShape(10.dp),
             )
             .clickable {

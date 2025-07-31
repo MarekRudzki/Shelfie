@@ -57,8 +57,10 @@ fun PhoneNumberInput(
                 focusedContainerColor = Color(255, 255, 255),
                 unfocusedContainerColor = Color(255, 255, 255),
                 errorContainerColor = Color(255, 255, 255),
-                focusedTextColor = MaterialTheme.colorScheme.primary,
-                errorTextColor = MaterialTheme.colorScheme.primary,
+                focusedTextColor = Color.Black,
+                errorTextColor = Color.Black,
+                unfocusedTextColor = Color.Black,
+                cursorColor = Color.Black,
             ),
             leadingIcon = {
                 Row(

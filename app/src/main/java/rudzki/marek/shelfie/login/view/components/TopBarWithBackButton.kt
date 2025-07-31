@@ -56,7 +56,7 @@ fun TopBarWithBackButton(
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
                 letterSpacing = 1.sp,
-                color = MaterialTheme.colorScheme.onBackground
+                color = MaterialTheme.colorScheme.primary
             ),
             modifier = Modifier.align(Alignment.Center)
         )

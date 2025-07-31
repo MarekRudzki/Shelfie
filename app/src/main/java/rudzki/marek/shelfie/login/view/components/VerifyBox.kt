@@ -21,6 +21,7 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
@@ -105,7 +106,9 @@ fun VerifyBox(
             .clip(RoundedCornerShape(25.dp))
             .height((LocalConfiguration.current.screenHeightDp.dp / 2.08f))
             .fillMaxWidth()
-            .background(color = Color.White)
+            .background(
+                color = MaterialTheme.colorScheme.onBackground
+            )
     ) {
         Column(
             modifier = Modifier.fillMaxSize()
@@ -121,7 +124,12 @@ fun VerifyBox(
                 modifier = Modifier
                     .padding(horizontal = 16.dp)
                     .align(Alignment.CenterHorizontally),
-                text = "Please enter the code you received."
+                text = "Please enter the code you received.",
+                style = TextStyle(
+                    color = MaterialTheme.colorScheme.primary,
+                    fontSize = 17.sp,
+                    textAlign = TextAlign.Center
+                )
             )
             Spacer(modifier = Modifier.height(16.dp))
             Row(
@@ -163,7 +171,7 @@ fun VerifyBox(
                             textAlign = TextAlign.Center,
                             fontWeight = FontWeight.Bold,
                             lineHeight = 28.sp,
-                            color = MaterialTheme.colorScheme.primary
+                            color = Color.Black
                         ),
                         singleLine = true,
                         keyboardOptions = KeyboardOptions(
@@ -193,7 +201,10 @@ fun VerifyBox(
                 Text(
                     modifier = Modifier.padding(10.dp),
                     text = "Resend will be available in ${timer}s.",
-                    fontSize = 14.sp,
+                    style = TextStyle(
+                        color = MaterialTheme.colorScheme.primary,
+                        fontSize = 15.sp,
+                    )
                 )
             } else {
                 Column (
@@ -203,6 +214,7 @@ fun VerifyBox(
                         text = "Didn't receive the code?",
                         style = TextStyle(
                             fontSize = 14.sp,
+                            color = MaterialTheme.colorScheme.primary,
                         )
                     )
                     Spacer(modifier = Modifier.height(8.dp))
@@ -214,7 +226,10 @@ fun VerifyBox(
                         },
                         colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
                     ) {
-                        Text("Send again", color = Color.White)
+                        Text(
+                            "Send again",
+                            color = Color.Black,
+                        )
                     }
                 }
             }
@@ -229,14 +244,25 @@ fun VerifyBox(
                     .height(80.dp)
                     .padding(16.dp),
                 shape = RoundedCornerShape(25.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
-            ) {
-                Text(
-                    text = "Continue",
-                    color = Color.White,
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold,
+                enabled = otpValues.all { it.isNotBlank() } && !viewModel.isLoading,
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.primary
                 )
+            ) {
+                if (viewModel.isLoading) {
+                    CircularProgressIndicator(
+                        modifier = Modifier.size(24.dp),
+                        color = Color.White,
+                        strokeWidth = 2.dp
+                    )
+                } else {
+                    Text(
+                        text = "Continue",
+                        color = Color.Black,
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold,
+                    )
+                }
             }
         }
     }
